@@ -1,6 +1,6 @@
 ''' Provides the order of the images in the excel sheets created by wind '''
 
-def ImageOrderScanner():
+def imageOrderScanner():
     return [
             'PCI',
             'PCI Legend',
@@ -12,7 +12,7 @@ def ImageOrderScanner():
             'CINR Legend'
             ]
 
-def ImageOrderWifi():
+def imageOrderWifi():
     return [
             'RSSI',
             'RSSI Legend',
