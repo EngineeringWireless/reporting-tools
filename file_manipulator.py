@@ -48,6 +48,19 @@ def identifyChannel(filename):
     else:
         return None
 '''
+Searches the WINd file name and returns the type of data that is being reported
+in the file.  This can be used for identifying what order the images will be
+appearing in the file.
+'''
+def identifyReportType(filename):
+    if 'TopN' in filename:
+        return 'Scanner'
+    elif 'WIFI' in filename:
+        return 'WiFi'
+    if 'ue' in filename:
+        return 'UE'
+
+'''
 Takes one of the zip files and extracts all of the images from it and places
 them in the working temp folder.  Both the working temp folder and the zip
 file are passed to the function.  Returns a list of the location of each image.
@@ -57,7 +70,7 @@ def grabImages(path, zip_filename):
     tmp_image_path = '{}/IMAGES/'.format(path)
     cur_file = '{}/{}'.format(path, zip_filename)
 
-    #uses zipfile to extract only the 
+    #uses zipfile to extract only the
     with zipfile.ZipFile(cur_file) as z:
         for file in z.namelist():
             if '.png' in file:
