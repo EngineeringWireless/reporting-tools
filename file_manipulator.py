@@ -5,7 +5,7 @@ later use
 
 
 
-import glob, re, zipfile, tempfile
+import glob, re, zipfile, tempfile, natsort
 from shutil import copy2, rmtree
 from os import path
 from image_order import imageOrderScanner
@@ -63,7 +63,8 @@ def identifyReportType(filename):
 '''
 Takes one of the zip files and extracts all of the images from it and places
 them in the working temp folder.  Both the working temp folder and the zip
-file are passed to the function.  Returns a list of the location of each image.
+file are passed to the function.  Returns a sorted list of the location of each
+image.
 '''
 def grabImages(path, zip_filename):
     embedded_image_path = '/xl/media'
@@ -76,7 +77,31 @@ def grabImages(path, zip_filename):
             if '.png' in file:
                 z.extract(file, tmp_image_path)
 
-    return glob.glob('{}{}/*.png'.format(tmp_image_path, embedded_image_path))
+    images = glob.glob('{}{}/*.png'.format(tmp_image_path, embedded_image_path))
+    images = natsort.natsorted(images)
+    return images
+
+'''
+Takes an already ordered list of the images from one file and a list of the
+order the images appear in.  Currently Creates a copy of the image file in an
+output folder and gives it the appropriate name.  The placement of the images
+will need to be finalized later.
+'''
+def nameImages(images,imageOrder):
+
+    counter = 0
+    top_n = 1
+
+    while counter < len(images):
+
+        for name in imageOrder:
+            copy2(
+                images[counter],
+                '../TEST_FILES/Output/Top {} {}.png'.format(top_n, name)
+                )
+            counter += 1
+
+        top_n += 1
 
 '''
 Test Code Below Here, to be deleted later
@@ -86,8 +111,9 @@ files = glob.glob('../TEST_FILES/*.xlsx')
 temp_dir = createZip(files)
 first_zip = glob.glob(temp_dir +'/*.zip')
 temp_img = grabImages(temp_dir,path.basename(first_zip[0]))
+print ('This is a {} file'.format(identifyReportType(path.basename(first_zip[0]))))
 
-print(temp_img)
+nameImages(temp_img, imageOrderScanner())
 
 
 input('Press Enter to clear temp files')
