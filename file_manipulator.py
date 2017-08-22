@@ -9,6 +9,7 @@ import glob, re, zipfile, tempfile, natsort
 from shutil import copy2, rmtree
 from os import path
 from utils.image_order import imageOrderScanner
+import pandas as pd
 
 '''
 method for creating zip files from existing excel files and storing them in a
@@ -83,25 +84,33 @@ def grabImages(path, zip_filename):
 
 '''
 Takes an already ordered list of the images from one file and a list of the
-order the images appear in.  Currently Creates a copy of the image file in an
-output folder and gives it the appropriate name.  The placement of the images
-will need to be finalized later.
+order the images appear in.  creates a renamed file in the same temp folder and
+returns a Dataframe containing which image it is and where it is.
 '''
 def nameImages(images,imageOrder):
 
     counter = 0
     top_n = 1
 
+    image_df = pd.DataFrame(columns = ['File Location'])
+
     while counter < len(images):
 
         for name in imageOrder:
-            copy2(
-                images[counter],
-                '../TEST_FILES/Output/Top {} {}.png'.format(top_n, name)
-                )
+
+            name = 'Top {} {}'.format(top_n, name)
+            file_path = path.dirname(images[counter])
+            filename = '{}\\{}.png'.format(file_path, name)
+
+            copy2(images[counter], filename)
+
+            image_df.loc[name] = filename
+
             counter += 1
 
         top_n += 1
+
+    return image_df
 
 '''
 Test Code Below Here, to be deleted later
@@ -112,8 +121,8 @@ temp_dir = createZip(files)
 first_zip = glob.glob(temp_dir +'/*.zip')
 temp_img = grabImages(temp_dir,path.basename(first_zip[0]))
 print ('This is a {} file'.format(identifyReportType(path.basename(first_zip[0]))))
-
-nameImages(temp_img, imageOrderScanner())
+print(temp_dir)
+result = nameImages(temp_img, imageOrderScanner())
 
 
 input('Press Enter to clear temp files')
