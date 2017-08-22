@@ -21,3 +21,6 @@ class Report():
                                 get_layout(self.prs.slide_layouts, img_layout)
                                 )
         return self.cur_slide
+
+    def save(self, file_name):
+        self.prs.save(file_name)
