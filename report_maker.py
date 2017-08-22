@@ -21,6 +21,9 @@ class Report():
                                 get_layout(self.prs.slide_layouts, img_layout)
                                 )
         return self.cur_slide
-
+        
+    '''
+    saves presentation to given location.
+    '''
     def save(self, file_name):
         self.prs.save(file_name)

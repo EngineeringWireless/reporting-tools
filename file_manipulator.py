@@ -8,7 +8,7 @@ later use
 import glob, re, zipfile, tempfile, natsort
 from shutil import copy2, rmtree
 from os import path
-from image_order import imageOrderScanner
+from utils.image_order import imageOrderScanner
 
 '''
 method for creating zip files from existing excel files and storing them in a
