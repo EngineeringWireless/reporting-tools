@@ -19,10 +19,18 @@ class Report():
     '''
     def add_image_slide(self):
         img_layout = 'Plot with Legend'
+        slide_info = {}
         self.cur_slide = self.prs.slides.add_slide(
                                 get_layout(self.prs.slide_layouts, img_layout)
                                 )
-        return self.cur_slide
+
+
+        for pl in self.cur_slide.placeholders:
+            slide_info[pl.name] = pl
+
+        slide_info['Slide'] = self.cur_slide
+
+        return slide_info
 
     def insert_image(self, placeholder, image):
 

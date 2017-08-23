@@ -19,8 +19,8 @@ rp = Report()
 
 slide = rp.add_image_slide()
 
-rp.insert_image(slide.placeholders[12], result['File Location']['Top 1 PCI'])
-rp.insert_image(slide.placeholders[13], result['File Location']['Top 1 PCI Legend'])
+rp.insert_image(slide['Picture Placeholder 2'], result['File Location']['Top 1 PCI'])
+rp.insert_image(slide['Picture Placeholder 3'], result['File Location']['Top 1 PCI Legend'])
 
 rp.save('Output.pptx')
 
