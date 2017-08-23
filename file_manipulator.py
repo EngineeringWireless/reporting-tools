@@ -9,7 +9,7 @@ import glob, re, zipfile, tempfile, natsort
 from shutil import copy2
 from os import path
 from utils.image_order import imageOrderScanner
-import pandas as pd
+
 
 '''
 method for creating zip files from existing excel files and storing them in a
@@ -69,7 +69,7 @@ image.
 '''
 def grabImages(path, zip_filename):
     embedded_image_path = '/xl/media'
-    tmp_image_path = '{}/IMAGES/'.format(path)
+    tmp_image_path = '{}/{}/'.format(path, zip_filename[:-4])
     cur_file = '{}/{}'.format(path, zip_filename)
 
     #uses zipfile to extract only the
@@ -84,15 +84,15 @@ def grabImages(path, zip_filename):
 
 '''
 Takes an already ordered list of the images from one file and a list of the
-order the images appear in.  creates a renamed file in the same temp folder and
-returns a Dataframe containing which image it is and where it is.
+order the images appear in.  Creates a renamed file in the same temp folder and
+returns a Dictionary containing which image it is and where it is.
 '''
 def nameImages(images,imageOrder):
 
     counter = 0
     top_n = 1
 
-    image_df = pd.DataFrame(columns = ['File Location'])
+    image_dict = {}
 
     while counter < len(images):
 
@@ -104,10 +104,10 @@ def nameImages(images,imageOrder):
 
             copy2(images[counter], filename)
 
-            image_df.loc[name] = filename
+            image_dict[name] = filename
 
             counter += 1
 
         top_n += 1
 
-    return image_df
+    return image_dict
