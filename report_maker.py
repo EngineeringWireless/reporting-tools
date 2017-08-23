@@ -1,5 +1,7 @@
 from pptx import Presentation
+from pptx.util import Length
 from utils.prs_tools import get_layout
+from utils.image_tools import fit_image
 
 
 class Report():
@@ -21,7 +23,20 @@ class Report():
                                 get_layout(self.prs.slide_layouts, img_layout)
                                 )
         return self.cur_slide
-        
+
+    def insert_image(self, placeholder, image):
+
+        size = [
+            int(Length(placeholder.width).pt),
+            int(Length(placeholder.height).pt)
+        ]
+
+        img = fit_image(image, size)
+
+        img_placeholder = placeholder.insert_picture(img)
+
+        return img_placeholder
+
     '''
     saves presentation to given location.
     '''
