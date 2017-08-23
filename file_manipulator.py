@@ -6,7 +6,7 @@ later use
 
 
 import glob, re, zipfile, tempfile, natsort
-from shutil import copy2, rmtree
+from shutil import copy2
 from os import path
 from utils.image_order import imageOrderScanner
 import pandas as pd
@@ -111,20 +111,3 @@ def nameImages(images,imageOrder):
         top_n += 1
 
     return image_df
-
-'''
-Test Code Below Here, to be deleted later
-'''
-files = glob.glob('../TEST_FILES/*.xlsx')
-
-temp_dir = createZip(files)
-first_zip = glob.glob(temp_dir +'/*.zip')
-temp_img = grabImages(temp_dir,path.basename(first_zip[0]))
-print ('This is a {} file'.format(identifyReportType(path.basename(first_zip[0]))))
-print(temp_dir)
-result = nameImages(temp_img, imageOrderScanner())
-
-
-input('Press Enter to clear temp files')
-
-rmtree(temp_dir)
