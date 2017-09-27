@@ -8,7 +8,7 @@ later use
 import glob, re, zipfile, tempfile, natsort
 from shutil import copy2
 from os import path
-from utils.image_order import imageOrderScanner
+#from utils.image_order import imageOrderLTEScanner
 
 
 '''
@@ -55,7 +55,10 @@ appearing in the file.
 '''
 def identifyReportType(filename):
     if 'TopN' in filename:
-        return 'Scanner'
+        if 'LTE' in filename:
+            return 'LTE Scanner'
+        elif 'WCDMA' in filename:
+            return 'UMTS Scanner'
     elif 'WIFI' in filename:
         return 'WiFi'
     if 'ue' in filename:

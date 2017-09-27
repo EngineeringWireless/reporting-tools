@@ -1,3 +1,6 @@
+from utils.image_tools import fit_image
+from pptx.util import Length
+
 '''
 method for finding a specific layout from the powerpoint template.  Accepts
 all the layouts and the known name of the slide needed.
@@ -16,7 +19,7 @@ placeholder and uses fit_image to make sure the entire image will be
 displayed.  Since PPTX changes the object after the image is inserted,
 this will return that new object.
 '''
-def insert_image(self, placeholder, image):
+def insert_image(placeholder, image):
 
     size = [
         int(Length(placeholder.width).pt),

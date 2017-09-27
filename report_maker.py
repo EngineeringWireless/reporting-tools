@@ -1,6 +1,6 @@
 from pptx import Presentation
 from pptx.util import Length
-from utils.prs_tools import get_layout
+from utils.prs_tools import get_layout, insert_image
 from utils.image_tools import fit_image
 
 
@@ -20,7 +20,7 @@ class Report():
     '''
     def add_image_slide(self):
 
-        img_layout = 'Plot with Legend'
+        img_layout = 'Dignity'
         slide_info = {}
 
         self.cur_slide = self.prs.slides.add_slide(
@@ -35,6 +35,8 @@ class Report():
 
         return slide_info
 
+    def add_image(self, img, ph):
+        return insert_image(ph, img)
 
     '''
     Saves presentation to given location.

@@ -11,8 +11,8 @@ the new image in it to be used in inserting into the presentation.
 def fit_image(image, size):
 
     imgIO = BytesIO()
-    
-    with open (image, 'r+b') as f:
+
+    with open(image, 'r+b') as f:
         with Image.open(f) as image:
 
             img_format = image.format
